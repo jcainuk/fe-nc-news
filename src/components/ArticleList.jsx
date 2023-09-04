@@ -33,20 +33,21 @@ const ArticleList = (props) => {
           </tr>
         </thead>
         <tbody>
-          {articles.map((article) => {
-            return (
-              <tr key={`${article.title}+${article.index}`}>
-                <td>{article.title}</td>
-                <td>{article.topic}</td>
-                <td>{article.author}</td>
-                <td>{convertDate(article.created_at)}</td>
-                <td>{article.votes}</td>
-                <td>
-                  <button className="btn btn-warning">View article</button>
-                </td>
-              </tr>
-            );
-          })}
+          {articles &&
+            articles.map((article) => {
+              return (
+                <tr key={`${article.title}+${article.index}`}>
+                  <td>{article.title}</td>
+                  <td>{article.topic}</td>
+                  <td>{article.author}</td>
+                  <td>{convertDate(article.created_at)}</td>
+                  <td>{article.votes}</td>
+                  <td>
+                    <button className="btn btn-warning">View article</button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>
