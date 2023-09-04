@@ -20,16 +20,16 @@ const ArticleList = (props) => {
   }, []);
 
   return (
-    <div>
-      <table>
+    <div className="list-group">
+      <table className="table table-hover table-light">
         <thead>
-          <tr>
-            <th>Title</th>
-            <th>Topic</th>
-            <th>Author</th>
-            <th>Date Created</th>
-            <th>Votes</th>
-            <th>Click to View</th>
+          <tr className="bg-primary">
+            <th scope="col">Title</th>
+            <th scope="col">Topic</th>
+            <th scope="col">Author</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">Votes</th>
+            <th scope="col">Click to View</th>
           </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@ const ArticleList = (props) => {
                 <td>{convertDate(article.created_at)}</td>
                 <td>{article.votes}</td>
                 <td>
-                  <button>View article</button>
+                  <button className="btn btn-warning">View article</button>
                 </td>
               </tr>
             );
