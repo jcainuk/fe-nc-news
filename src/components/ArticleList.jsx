@@ -1,11 +1,9 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ArticleFinder from "../apis/ArticleFinder";
-import { ArticlesContext } from "../context/ArticlesContext";
 import convertDate from "../utils/UKDateConverter";
 
-const ArticleList = (props) => {
-  const { articles, setArticles } = useContext(ArticlesContext);
+const ArticleList = ({ articles, setArticles }) => {
   const navigateTo = useNavigate();
 
   useEffect(() => {
@@ -19,7 +17,7 @@ const ArticleList = (props) => {
     };
 
     fetchData();
-  }, []);
+  }, [setArticles]);
 
   const handleArticleSelect = (id) => {
     navigateTo(`/articles/${id}`);

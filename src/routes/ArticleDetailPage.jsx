@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ArticlesContext } from "../context/ArticlesContext";
 import ArticleFinder from "../apis/ArticleFinder";
 
 const ArticleDetailPage = () => {
   const { id } = useParams();
-  const { selectedArticle, setSelectedArticle } = useContext(ArticlesContext);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,19 +12,17 @@ const ArticleDetailPage = () => {
         const response = await ArticleFinder.get(`/articles/${id}`);
         setSelectedArticle(response.data.article);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     fetchData();
-  }, [id, setSelectedArticle]);
+  }, [id]);
 
   return (
     <div className="container mt-4">
       {selectedArticle && (
         <div className="row justify-content-center">
           <div className="col-12 col-md-8">
-            {" "}
-            {/* Adjust the width for computer screens */}
             <div className="card">
               <img
                 src={selectedArticle.article_img_url}
