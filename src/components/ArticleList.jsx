@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ArticleFinder from "../apis/ArticleFinder";
-import convertDate from "../utils/UKDateConverter";
 
 const ArticleList = ({ articles, setArticles }) => {
   const navigateTo = useNavigate();
@@ -40,7 +39,8 @@ const ArticleList = ({ articles, setArticles }) => {
                   <p className="card-text">Topic: {article.topic}</p>
                   <p className="card-text">Author: {article.author}</p>
                   <p className="card-text">
-                    Date Created: {convertDate(article.created_at)}
+                    Date Created:{" "}
+                    {new Date(article.created_at).toLocaleDateString()}
                   </p>
                   <p className="card-text">Comments: {article.comment_count}</p>
                   <p className="card-text">Votes: {article.votes}</p>
