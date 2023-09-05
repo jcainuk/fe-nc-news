@@ -1,15 +1,17 @@
 import React, { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import ArticleFinder from "../apis/ArticleFinder";
 import { ArticlesContext } from "../context/ArticlesContext";
 import convertDate from "../utils/UKDateConverter";
 
 const ArticleList = (props) => {
   const { articles, setArticles } = useContext(ArticlesContext);
+  const navigateTo = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await ArticleFinder.get("/");
+        const response = await ArticleFinder.get("/articles");
         setArticles(response.data.articles);
       } catch (err) {
         console.log(err);
@@ -18,6 +20,10 @@ const ArticleList = (props) => {
 
     fetchData();
   }, []);
+
+  const handleArticleSelect = (id) => {
+    navigateTo(`/articles/${id}`);
+  };
 
   return (
     <div className="row">
@@ -40,7 +46,10 @@ const ArticleList = (props) => {
                   </p>
                   <p className="card-text">Comments: {article.comment_count}</p>
                   <p className="card-text">Votes: {article.votes}</p>
-                  <button className="btn btn-warning mt-auto">
+                  <button
+                    className="btn btn-warning mt-auto"
+                    onClick={() => handleArticleSelect(article.article_id)}
+                  >
                     View article
                   </button>
                 </div>
