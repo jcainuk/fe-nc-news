@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import ArticleFinder from "../apis/ArticleFinder";
 
-const VoteArticle = ({ id, initialVoteCount }) => {
-  const [voteCount, setVoteCount] = useState(initialVoteCount);
+const VoteArticle = ({ id, initialVoteCount, voteCount, setVoteCount }) => {
   const [error, setError] = useState(false);
 
   const handleVote = async (incVotes) => {
@@ -10,10 +9,13 @@ const VoteArticle = ({ id, initialVoteCount }) => {
       const updatedArticle = await ArticleFinder.patch(`/articles/${id}`, {
         inc_votes: incVotes
       });
-      console.log(updatedArticle);
 
-      setVoteCount(updatedArticle.data.votes);
-      setError(false);
+      if (updatedArticle.data && updatedArticle.data.article) {
+        setVoteCount(updatedArticle.data.article.votes);
+        setError(false);
+      } else {
+        setError(true);
+      }
     } catch (err) {
       console.error(err);
       setError(true);

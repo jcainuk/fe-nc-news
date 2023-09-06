@@ -12,26 +12,6 @@ const ArticleDetailPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [voteCount, setVoteCount] = useState(0);
-  const [error, setError] = useState(false);
-
-  const handleVote = async (incVotes) => {
-    try {
-      const newVoteCount = voteCount + incVotes;
-      setVoteCount(newVoteCount);
-
-      const updatedArticle = await ArticleFinder.patch(`/articles/${id}`, {
-        inc_votes: incVotes
-      });
-
-      setSelectedArticle(updatedArticle.data.updatedArticle);
-      setError(false);
-    } catch (err) {
-      console.error(err);
-      setError(true);
-
-      setVoteCount((prevVoteCount) => prevVoteCount - incVotes);
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,6 +68,10 @@ const ArticleDetailPage = () => {
                     <VoteArticle
                       id={id}
                       initialVoteCount={selectedArticle?.votes || 0}
+                      voteCount={voteCount}
+                      setVoteCount={(newVoteCount) =>
+                        setVoteCount(newVoteCount)
+                      }
                     />
                   </div>
                 </div>
