@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ArticleFinder from "../apis/ArticleFinder";
 import CommentList from "../components/CommentList";
@@ -10,6 +10,27 @@ const ArticleDetailPage = () => {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [voteCount, setVoteCount] = useState(0);
+  const [error, setError] = useState(false);
+
+  const handleVote = async (incVotes) => {
+    try {
+      const newVoteCount = voteCount + incVotes;
+      setVoteCount(newVoteCount);
+
+      const updatedArticle = await ArticleFinder.patch(`/articles/${id}`, {
+        inc_votes: incVotes
+      });
+
+      setSelectedArticle(updatedArticle.data.updatedArticle);
+      setError(false);
+    } catch (err) {
+      console.error(err);
+      setError(true);
+
+      setVoteCount((prevVoteCount) => prevVoteCount - incVotes);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +43,7 @@ const ArticleDetailPage = () => {
         setSelectedArticle(articleResponse.data.article);
         setComments(commentsResponse.data.comments);
         setIsLoading(false);
+        setVoteCount(articleResponse.data.article.votes);
       } catch (err) {
         console.error(err);
         setIsLoading(false);
@@ -62,7 +84,32 @@ const ArticleDetailPage = () => {
                         selectedArticle.created_at
                       ).toLocaleDateString()}
                     </p>
-                    <p className="card-text">Votes: {selectedArticle.votes}</p>
+                    <div className="d-flex align-items-center">
+                      <button
+                        type="button"
+                        className="btn btn-success me-2"
+                        onClick={() => {
+                          handleVote(1);
+                        }}
+                      >
+                        <i className="bi bi-hand-thumbs-up"></i> Vote Up
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={() => {
+                          handleVote(-1);
+                        }}
+                      >
+                        <i className="bi bi-hand-thumbs-down"></i> Vote Down
+                      </button>
+                      <p className="ms-3">Votes: {voteCount}</p>
+                    </div>
+                    {error && (
+                      <p className="text-danger mt-3">
+                        Error occurred while voting.
+                      </p>
+                    )}
                   </div>
                 </div>
               )}
