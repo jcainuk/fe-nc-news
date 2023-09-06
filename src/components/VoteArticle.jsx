@@ -6,18 +6,21 @@ const VoteArticle = ({ id, initialVoteCount, voteCount, setVoteCount }) => {
 
   const handleVote = async (incVotes) => {
     try {
+      setVoteCount((currVotes) => currVotes + incVotes);
+
       const updatedArticle = await ArticleFinder.patch(`/articles/${id}`, {
         inc_votes: incVotes
       });
 
       if (updatedArticle.data && updatedArticle.data.article) {
-        setVoteCount(updatedArticle.data.article.votes);
         setError(false);
       } else {
         setError(true);
       }
     } catch (err) {
       console.error(err);
+
+      setVoteCount((currVotes) => currVotes - incVotes);
       setError(true);
     }
   };
