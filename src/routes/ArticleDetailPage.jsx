@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ArticleFinder from "../apis/ArticleFinder";
 import CommentList from "../components/CommentList";
+import VoteArticle from "../components/VoteArticle";
 
 const ArticleDetailPage = () => {
   const { id } = useParams();
@@ -84,32 +85,10 @@ const ArticleDetailPage = () => {
                         selectedArticle.created_at
                       ).toLocaleDateString()}
                     </p>
-                    <div className="d-flex align-items-center">
-                      <button
-                        type="button"
-                        className="btn btn-success me-2"
-                        onClick={() => {
-                          handleVote(1);
-                        }}
-                      >
-                        <i className="bi bi-hand-thumbs-up"></i> Vote Up
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        onClick={() => {
-                          handleVote(-1);
-                        }}
-                      >
-                        <i className="bi bi-hand-thumbs-down"></i> Vote Down
-                      </button>
-                      <p className="ms-3">Votes: {voteCount}</p>
-                    </div>
-                    {error && (
-                      <p className="text-danger mt-3">
-                        Error occurred while voting.
-                      </p>
-                    )}
+                    <VoteArticle
+                      id={id}
+                      initialVoteCount={selectedArticle?.votes || 0}
+                    />
                   </div>
                 </div>
               )}
