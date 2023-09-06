@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ArticleFinder from "../apis/ArticleFinder";
 import CommentList from "../components/CommentList";
+import VoteArticle from "../components/VoteArticle";
 
 const ArticleDetailPage = () => {
   const { id } = useParams();
@@ -10,6 +11,7 @@ const ArticleDetailPage = () => {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [voteCount, setVoteCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +24,7 @@ const ArticleDetailPage = () => {
         setSelectedArticle(articleResponse.data.article);
         setComments(commentsResponse.data.comments);
         setIsLoading(false);
+        setVoteCount(articleResponse.data.article.votes);
       } catch (err) {
         console.error(err);
         setIsLoading(false);
@@ -62,7 +65,14 @@ const ArticleDetailPage = () => {
                         selectedArticle.created_at
                       ).toLocaleDateString()}
                     </p>
-                    <p className="card-text">Votes: {selectedArticle.votes}</p>
+                    <VoteArticle
+                      id={id}
+                      initialVoteCount={selectedArticle?.votes || 0}
+                      voteCount={voteCount}
+                      setVoteCount={(newVoteCount) =>
+                        setVoteCount(newVoteCount)
+                      }
+                    />
                   </div>
                 </div>
               )}
