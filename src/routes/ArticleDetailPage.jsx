@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import NavigationBar from "../components/NavigationBar";
 import ArticleFinder from "../apis/ArticleFinder";
 import CommentList from "../components/CommentList";
 import VoteArticle from "../components/VoteArticle";
@@ -42,6 +43,7 @@ const ArticleDetailPage = () => {
   return (
     <div>
       <Header />
+      <NavigationBar />
       <div className="container mt-4">
         {isLoading ? (
           <p>Loading...</p>
