@@ -42,8 +42,8 @@ const ArticleDetailPage = () => {
 
   return (
     <div>
-      <Header />
       <NavigationBar />
+      <Header />
       <div className="container mt-4">
         {isLoading ? (
           <p>Loading...</p>

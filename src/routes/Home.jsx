@@ -22,8 +22,8 @@ const Home = () => {
 
   return (
     <div>
-      <Header />
       <NavigationBar />
+      <Header />
       <ArticleList articles={articles} setArticles={setArticles} />
     </div>
   );

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import ArticleFinder from "../apis/ArticleFinder";
 import ArticleList from "../components/ArticleList";
+import NavigationBar from "../components/NavigationBar";
 
 const TopicPage = () => {
   const { topicSlug } = useParams();
@@ -32,6 +33,7 @@ const TopicPage = () => {
 
   return (
     <div>
+      <NavigationBar />
       <Header />
       <div className="container mt-4">
         {isLoading ? (

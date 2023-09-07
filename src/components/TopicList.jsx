@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ArticleFinder from "../apis/ArticleFinder";
 import Header from "./Header";
+import NavigationBar from "./NavigationBar";
 
 const TopicList = () => {
   const [topics, setTopics] = useState([]);
@@ -22,6 +23,7 @@ const TopicList = () => {
   return (
     <div>
       <Header />
+      <NavigationBar />
       <h2>Topics</h2>
       <ul>
         {topics.map((topic) => (
