@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import ArticleFinder from "../apis/ArticleFinder";
 import CommentList from "../components/CommentList";
 import VoteArticle from "../components/VoteArticle";
+import CommentForm from "../components/CommentForm";
 
 const ArticleDetailPage = () => {
   const { id } = useParams();
@@ -33,6 +34,10 @@ const ArticleDetailPage = () => {
     };
     fetchData();
   }, [id]);
+
+  const addCommentToUI = (comment) => {
+    setComments((prevComments) => [comment, ...prevComments]);
+  };
 
   return (
     <div>
@@ -77,6 +82,7 @@ const ArticleDetailPage = () => {
                 </div>
               )}
               <div className="mt-4">
+                <CommentForm articleId={id} onCommentSubmit={addCommentToUI} />{" "}
                 {comments.length === 0 ? (
                   <p>No comments yet.</p>
                 ) : (
