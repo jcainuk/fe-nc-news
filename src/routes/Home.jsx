@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import ArticleList from "../components/ArticleList";
 import ArticleFinder from "../apis/ArticleFinder";
+import NavigationBar from "../components/NavigationBar";
 
 const Home = () => {
   const [articles, setArticles] = useState([]);
@@ -22,6 +23,7 @@ const Home = () => {
   return (
     <div>
       <Header />
+      <NavigationBar />
       <ArticleList articles={articles} setArticles={setArticles} />
     </div>
   );
