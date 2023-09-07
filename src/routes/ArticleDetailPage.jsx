@@ -82,7 +82,7 @@ const ArticleDetailPage = () => {
                 </div>
               )}
               <div className="mt-4">
-                <CommentForm articleId={id} onCommentSubmit={addCommentToUI} />{" "}
+                <CommentForm id={id} onCommentSubmit={addCommentToUI} />{" "}
                 {comments.length === 0 ? (
                   <p>No comments yet.</p>
                 ) : (

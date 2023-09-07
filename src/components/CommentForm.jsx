@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ArticleFinder from "../apis/ArticleFinder";
 
-const CommentForm = ({ articleId, onCommentSubmit }) => {
+const CommentForm = ({ id, onCommentSubmit }) => {
   const [commentData, setCommentData] = useState({
     username: "",
     body: ""
@@ -34,14 +34,11 @@ const CommentForm = ({ articleId, onCommentSubmit }) => {
 
     try {
       console.log(username, body, "<< before api call");
-      const response = await ArticleFinder.post(
-        `/articles/${articleId}/comments`,
-        {
-          username: username,
-          body: body
-        }
-      );
-      console.log(response.data.comment);
+      const response = await ArticleFinder.post(`/articles/${id}/comments`, {
+        username,
+        body
+      });
+
       onCommentSubmit(response.data.comment);
 
       setCommentData({
