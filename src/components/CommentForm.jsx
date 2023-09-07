@@ -21,21 +21,25 @@ const CommentForm = ({ id, onCommentSubmit }) => {
     e.preventDefault();
 
     const { username, body } = commentData;
-    console.log(commentData);
-    console.log(username);
-    console.log(body);
 
     if (!username || !body) {
-      alert("username and body are required.");
+      alert("Username and body are required.");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      console.log(username, body, "<< before api call");
+      const hardCodedUsername = "grumpy19";
+
+      if (!navigator.onLine) {
+        alert(
+          "You are offline. Please check your internet connection and try again."
+        );
+      }
+
       const response = await ArticleFinder.post(`/articles/${id}/comments`, {
-        username,
+        username: hardCodedUsername,
         body
       });
 
