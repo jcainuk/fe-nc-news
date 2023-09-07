@@ -22,8 +22,8 @@ const TopicList = () => {
 
   return (
     <div>
-      <Header />
       <NavigationBar />
+      <Header />
       <h2>Topics</h2>
       <ul>
         {topics.map((topic) => (
