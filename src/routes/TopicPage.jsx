@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import ArticleList from "../components/ArticleList";
 import NavigationBar from "../components/NavigationBar";
 
 import ArticleFinder from "../apis/ArticleFinder";
