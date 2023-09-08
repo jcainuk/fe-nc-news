@@ -14,11 +14,11 @@ const ArticleList = ({ topicSlug, sortOptions }) => {
         let response;
         if (topicSlug) {
           response = await ArticleFinder.get(`/articles?topic=${topicSlug}`, {
-            params: sortOptions // Pass sortOptions as query parameters
+            params: sortOptions
           });
         } else {
           response = await ArticleFinder.get("/articles", {
-            params: sortOptions // Pass sortOptions as query parameters
+            params: sortOptions
           });
         }
         setArticles(response.data.articles);
@@ -49,13 +49,14 @@ const ArticleList = ({ topicSlug, sortOptions }) => {
     <div className="row">
       {articles.map((article) => (
         <div key={article.article_id} className="col-md-4 mb-4">
-          <div className="card d-flex flex-column h-100">
+          <div className="card h-100">
             <img
               src={article.article_img_url}
-              className="card-img-top"
+              className="card-img-top img-fluid"
               alt={article.title}
+              style={{ height: "200px", objectFit: "cover" }}
             />
-            <div className="card-body text-center d-flex flex-column">
+            <div className="card-body">
               <h5 className="card-title">{article.title}</h5>
               <p className="card-text">Topic: {article.topic}</p>
               <p className="card-text">Author: {article.author}</p>
@@ -65,11 +66,13 @@ const ArticleList = ({ topicSlug, sortOptions }) => {
               </p>
               <p className="card-text">Comments: {article.comment_count}</p>
               <p className="card-text">Votes: {article.votes}</p>
+            </div>
+            <div className="card-footer text-center">
               <button
-                className="btn btn-warning mt-auto"
+                className="btn btn-warning"
                 onClick={() => handleArticleSelect(article.article_id)}
               >
-                View article
+                View Article
               </button>
             </div>
           </div>

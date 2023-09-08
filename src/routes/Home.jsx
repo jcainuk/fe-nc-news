@@ -7,16 +7,17 @@ import ArticleSortControls from "../components/ArticleSortControls";
 
 const Home = () => {
   const [articles, setArticles] = useState([]);
-  const [sortOptions, setSortOptions] = useState({
-    sortBy: "",
-    sortOrder: ""
-  });
+  const [sortBy, setSortBy] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await ArticleFinder.get("/articles", {
-          params: sortOptions
+          params: {
+            sort_by: sortBy,
+            order: sortOrder
+          }
         });
         setArticles(response.data.articles);
       } catch (err) {
@@ -25,10 +26,40 @@ const Home = () => {
     };
 
     fetchData();
-  }, [sortOptions]);
+  }, [sortBy, sortOrder]);
 
-  const handleSortChange = (sortBy, sortOrder) => {
-    setSortOptions({ sortBy, sortOrder });
+  const handleSortChange = (name, value) => {
+    if (name === "sortBy") {
+      setSortBy(value);
+    } else if (name === "sortOrder") {
+      setSortOrder(value);
+    }
+  };
+
+  const handleApplyFilters = async () => {
+    try {
+      const response = await ArticleFinder.get("/articles", {
+        params: {
+          sort_by: sortBy,
+          order: sortOrder
+        }
+      });
+      setArticles(response.data.articles);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleResetFilters = async () => {
+    try {
+      setSortBy("");
+      setSortOrder("");
+
+      const response = await ArticleFinder.get("/articles");
+      setArticles(response.data.articles);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -37,13 +68,11 @@ const Home = () => {
       <Header />
       <ArticleSortControls
         onSortChange={handleSortChange}
-        sortOptions={sortOptions}
+        sortOptions={{ sortBy, sortOrder }}
+        onApplyFilters={handleApplyFilters}
+        onResetFilters={handleResetFilters}
       />
-      <ArticleList
-        articles={articles}
-        setArticles={setArticles}
-        sortOptions={sortOptions}
-      />
+      <ArticleList articles={articles} />
     </div>
   );
 };

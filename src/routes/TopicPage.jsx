@@ -22,7 +22,7 @@ const TopicPage = () => {
         const response = await ArticleFinder.get(
           `/articles?topic=${topicSlug}`,
           {
-            params: sortOptions // Pass sortOptions as query parameters
+            params: sortOptions
           }
         );
         setTopicArticles(response.data.articles);
