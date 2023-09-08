@@ -15,11 +15,17 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const params = {};
+
+        if (sortBy) {
+          params.sort_by = sortBy;
+        }
+
+        if (sortOrder) {
+          params.order = sortOrder;
+        }
         const response = await ArticleFinder.get("/articles", {
-          params: {
-            sort_by: sortBy,
-            order: sortOrder
-          }
+          params
         });
         setArticles(response.data.articles);
         console.log(
