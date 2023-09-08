@@ -73,7 +73,7 @@ const Home = () => {
         sort_by: sortBy,
         order: sortOrder
       });
-      navigateTo(`/?sort_by=${sortBy}&order=${sortOrder}`);
+      navigateTo(`/articles?sort_by=${sortBy}&order=${sortOrder}`);
     } catch (err) {
       console.log(err);
     }
@@ -88,7 +88,8 @@ const Home = () => {
 
       const response = await ArticleFinder.get("/articles");
       setArticles(response.data.articles);
-      navigateTo(`/?sort_by=${sortBy}&order=${sortOrder}`);
+      navigateTo(`/
+      `);
     } catch (err) {
       console.log(err);
     }

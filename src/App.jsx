@@ -13,6 +13,7 @@ const App = () => {
         <Route path="/articles/:id" element={<ArticleDetailPage />} />
         <Route path="/topics" element={<TopicList />} />
         <Route path="/topics/:topicSlug" element={<TopicPage />} />
+        <Route path="/*" element={<Home />} />
       </Routes>
     </div>
   );
