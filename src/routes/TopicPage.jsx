@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ArticleList from "../components/ArticleList";
 import NavigationBar from "../components/NavigationBar";
@@ -7,6 +7,7 @@ import NavigationBar from "../components/NavigationBar";
 import ArticleFinder from "../apis/ArticleFinder";
 
 const TopicPage = () => {
+  const navigateTo = useNavigate();
   const { topicSlug } = useParams();
   const [topicArticles, setTopicArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,6 +29,10 @@ const TopicPage = () => {
     };
     fetchData();
   }, [topicSlug]);
+
+  const handleArticleSelect = (id) => {
+    navigateTo(`/articles/${id}`);
+  };
 
   return (
     <div>
