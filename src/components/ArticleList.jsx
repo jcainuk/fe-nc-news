@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ArticleFinder from "../apis/ArticleFinder";
 
-const ArticleList = ({ topicSlug }) => {
+const ArticleList = ({ topicSlug, sortOptions }) => {
   const navigateTo = useNavigate();
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -13,9 +13,13 @@ const ArticleList = ({ topicSlug }) => {
       try {
         let response;
         if (topicSlug) {
-          response = await ArticleFinder.get(`/articles?topic=${topicSlug}`);
+          response = await ArticleFinder.get(`/articles?topic=${topicSlug}`, {
+            params: sortOptions // Pass sortOptions as query parameters
+          });
         } else {
-          response = await ArticleFinder.get("/articles");
+          response = await ArticleFinder.get("/articles", {
+            params: sortOptions // Pass sortOptions as query parameters
+          });
         }
         setArticles(response.data.articles);
         setIsLoading(false);
@@ -27,7 +31,7 @@ const ArticleList = ({ topicSlug }) => {
     };
 
     fetchData();
-  }, [topicSlug]);
+  }, [topicSlug, sortOptions]);
 
   const handleArticleSelect = (id) => {
     navigateTo(`/articles/${id}`);
