@@ -13,38 +13,39 @@ const Home = () => {
   const [sortOrder, setSortOrder] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const params = {};
+  const fetchArticles = async () => {
+    try {
+      const params = {};
 
-        if (sortBy) {
-          params.sort_by = sortBy;
-        }
-
-        if (sortOrder) {
-          params.order = sortOrder;
-        }
-        const response = await ArticleFinder.get("/articles", params);
-        setArticles(response.data.articles);
-        console.log(
-          "API request with sortBy:",
-          sortBy,
-          "and sortOrder:",
-          sortOrder
-        );
-      } catch (err) {
-        console.log(err);
+      if (sortBy) {
+        params.sort_by = sortBy;
       }
-    };
 
+      if (sortOrder) {
+        params.order = sortOrder;
+      }
+
+      const response = await ArticleFinder.get("/articles", params);
+      setArticles(response.data.articles);
+      console.log(
+        "API request with sortBy:",
+        sortBy,
+        "and sortOrder:",
+        sortOrder
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
     const initialSortBy = searchParams.get("sort_by");
     const initialSortOrder = searchParams.get("order");
 
     setSortBy(initialSortBy || "");
     setSortOrder(initialSortOrder || "");
 
-    fetchData();
+    fetchArticles();
   }, []);
 
   const handleSortChange = (name, value) => {

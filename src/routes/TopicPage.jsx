@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import ArticleList from "../components/ArticleList";
 import NavigationBar from "../components/NavigationBar";
 
 import ArticleFinder from "../apis/ArticleFinder";
@@ -13,21 +12,19 @@ const TopicPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
+  const fetchArticlesByTopic = async () => {
+    try {
+      const response = await ArticleFinder.get(`/articles?topic=${topicSlug}`);
+      setTopicArticles(response.data.articles);
+      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+      setIsLoading(false);
+      setIsError(true);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await ArticleFinder.get(
-          `/articles?topic=${topicSlug}`
-        );
-        setTopicArticles(response.data.articles);
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err);
-        setIsLoading(false);
-        setIsError(true);
-      }
-    };
-    fetchData();
+    fetchArticlesByTopic();
   }, [topicSlug]);
 
   const handleArticleSelect = (id) => {

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ArticleFinder from "../apis/ArticleFinder";
+import { UserContext } from "../contexts/UserProvider";
 
 const CommentForm = ({ id, onCommentSubmit }) => {
+  const { user: loggedInUser } = useContext(UserContext);
   const [commentData, setCommentData] = useState({
-    username: "",
+    username: loggedInUser,
     body: ""
   });
 
@@ -23,15 +25,13 @@ const CommentForm = ({ id, onCommentSubmit }) => {
     const { username, body } = commentData;
 
     if (!username || !body) {
-      alert("Username and body are required.");
+      alert("Username and comment body are required.");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const hardCodedUsername = "grumpy19";
-
       if (!navigator.onLine) {
         alert(
           "You are offline. Please check your internet connection and try again."
@@ -39,14 +39,14 @@ const CommentForm = ({ id, onCommentSubmit }) => {
       }
 
       const response = await ArticleFinder.post(`/articles/${id}/comments`, {
-        username: hardCodedUsername,
+        username,
         body
       });
 
       onCommentSubmit(response.data.comment);
 
       setCommentData({
-        username: "",
+        username: loggedInUser, // Reset the username to the loggedInUser value
         body: ""
       });
     } catch (error) {
@@ -64,10 +64,11 @@ const CommentForm = ({ id, onCommentSubmit }) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Username"
+            placeholder={`Username: ${loggedInUser} (Logged In)`}
             name="username"
             value={commentData.username}
             onChange={handleInputChange}
+            disabled
           />
         </div>
         <div className="mb-3">

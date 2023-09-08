@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar";
 import ArticleFinder from "../apis/ArticleFinder";
 import CommentList from "../components/CommentList";
 import VoteArticle from "../components/VoteArticle";
 import CommentForm from "../components/CommentForm";
+import { UserContext } from "../contexts/UserProvider";
 
 const ArticleDetailPage = () => {
   const { id } = useParams();
@@ -14,6 +15,8 @@ const ArticleDetailPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [voteCount, setVoteCount] = useState(0);
+
+  const { user: loggedInUser } = useContext(UserContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +41,44 @@ const ArticleDetailPage = () => {
 
   const addCommentToUI = (comment) => {
     setComments((prevComments) => [comment, ...prevComments]);
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    setComments((prevComments) => {
+      return prevComments.map((comment) => {
+        if (comment.comment_id === commentId) {
+          return { ...comment, isDeleting: true };
+        }
+        return comment;
+      });
+    });
+
+    try {
+      await ArticleFinder.delete(`/comments/${commentId}`);
+
+      setComments((prevComments) => {
+        return prevComments.filter(
+          (comment) => comment.comment_id !== commentId
+        );
+      });
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+
+      if (error.response && error.response.status === 404) {
+        alert("Comment not found.");
+      } else {
+        alert("An error occurred while deleting the comment.");
+      }
+
+      setComments((prevComments) => {
+        return prevComments.map((comment) => {
+          if (comment.comment_id === commentId) {
+            return { ...comment, isDeleting: false };
+          }
+          return comment;
+        });
+      });
+    }
   };
 
   return (
@@ -88,7 +129,11 @@ const ArticleDetailPage = () => {
                 {comments.length === 0 ? (
                   <p>No comments yet.</p>
                 ) : (
-                  <CommentList comments={comments} />
+                  <CommentList
+                    comments={comments}
+                    onDeleteComment={handleDeleteComment}
+                    loggedInUser={loggedInUser}
+                  />
                 )}
               </div>
             </div>

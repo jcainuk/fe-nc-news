@@ -1,6 +1,17 @@
 import React from "react";
+import ArticleFinder from "../apis/ArticleFinder";
 
-const CommentList = ({ comments }) => {
+const CommentList = ({ comments, onDeleteComment, loggedInUser }) => {
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await ArticleFinder.delete(`/comments/${commentId}`);
+
+      onDeleteComment(commentId);
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  };
+
   return (
     <div>
       <h3 className="mt-4">Comments</h3>
@@ -15,6 +26,14 @@ const CommentList = ({ comments }) => {
               <span className="text-primary">{comment.author}</span> |{" "}
               <strong>Created At:</strong>{" "}
               {new Date(comment.created_at).toLocaleString()}
+              {loggedInUser === comment.author && (
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDeleteComment(comment.comment_id)}
+                >
+                  Delete
+                </button>
+              )}
             </div>
           </li>
         ))}
