@@ -1,5 +1,5 @@
 import React from "react";
-import ArticleFinder from "../apis/ArticleFinder";
+import ArticleFinder from "../../apis/ArticleFinder";
 
 const CommentList = ({ comments, onDeleteComment, loggedInUser }) => {
   const handleDeleteComment = async (commentId) => {

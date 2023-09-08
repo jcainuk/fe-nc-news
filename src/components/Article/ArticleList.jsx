@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ArticleFinder from "../apis/ArticleFinder";
+import ArticleFinder from "../../apis/ArticleFinder";
 
 const ArticleList = ({ articles, sortOptions }) => {
   const navigateTo = useNavigate();

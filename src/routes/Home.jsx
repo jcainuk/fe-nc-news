@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
-import ArticleList from "../components/ArticleList";
+import ArticleList from "../components/Article/ArticleList";
 import ArticleFinder from "../apis/ArticleFinder";
 import NavigationBar from "../components/NavigationBar";
-import ArticleSortControls from "../components/ArticleSortControls";
+import ArticleSortControls from "../components/Article/ArticleSortControls";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
 const Home = () => {
