@@ -27,7 +27,10 @@ const CommentList = ({ comments, onDeleteComment, loggedInUser }) => {
               <strong>Created At:</strong>{" "}
               {new Date(comment.created_at).toLocaleString()}
               {loggedInUser === comment.author && (
-                <button onClick={() => handleDeleteComment(comment.comment_id)}>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDeleteComment(comment.comment_id)}
+                >
                   Delete
                 </button>
               )}
