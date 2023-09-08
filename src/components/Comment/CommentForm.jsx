@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import ArticleFinder from "../apis/ArticleFinder";
-import { UserContext } from "../contexts/UserProvider";
+import ArticleFinder from "../../apis/ArticleFinder";
+import { UserContext } from "../../contexts/UserProvider";
 
 const CommentForm = ({ id, onCommentSubmit }) => {
   const { user: loggedInUser } = useContext(UserContext);

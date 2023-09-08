@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar";
 import ArticleFinder from "../apis/ArticleFinder";
-import CommentList from "../components/CommentList";
+import CommentList from "../components/Comment/CommentList";
 import VoteArticle from "../components/VoteArticle";
-import CommentForm from "../components/CommentForm";
+import CommentForm from "../components/Comment/CommentForm";
 import { UserContext } from "../contexts/UserProvider";
 
 const ArticleDetailPage = () => {
