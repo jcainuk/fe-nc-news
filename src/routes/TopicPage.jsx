@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
-import ArticleFinder from "../apis/ArticleFinder";
 import ArticleList from "../components/ArticleList";
 import NavigationBar from "../components/NavigationBar";
+
+import ArticleFinder from "../apis/ArticleFinder";
 
 const TopicPage = () => {
   const { topicSlug } = useParams();
   const [topicArticles, setTopicArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  console.log(topicSlug, "topic slug");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,9 +29,6 @@ const TopicPage = () => {
     fetchData();
   }, [topicSlug]);
 
-  console.log("topicArticles:", topicArticles);
-  console.log("topicSlug:", topicSlug);
-
   return (
     <div>
       <NavigationBar />
@@ -41,9 +39,41 @@ const TopicPage = () => {
         ) : isError ? (
           <p>An error occurred while fetching data.</p>
         ) : (
-          <div>
+          <div className="row">
             <h2>Topic: {topicSlug}</h2>
-            <ArticleList topicSlug={topicSlug} />
+            {topicArticles.map((article) => (
+              <div key={article.article_id} className="col-md-4 mb-4">
+                <div className="card h-100">
+                  <img
+                    src={article.article_img_url}
+                    className="card-img-top img-fluid"
+                    alt={article.title}
+                    style={{ height: "200px", objectFit: "cover" }}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{article.title}</h5>
+                    <p className="card-text">Topic: {article.topic}</p>
+                    <p className="card-text">Author: {article.author}</p>
+                    <p className="card-text">
+                      Date Created:{" "}
+                      {new Date(article.created_at).toLocaleDateString()}
+                    </p>
+                    <p className="card-text">
+                      Comments: {article.comment_count}
+                    </p>
+                    <p className="card-text">Votes: {article.votes}</p>
+                  </div>
+                  <div className="card-footer text-center">
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => handleArticleSelect(article.article_id)}
+                    >
+                      View Article
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>

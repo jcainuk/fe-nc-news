@@ -1,4 +1,3 @@
-// App.js
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
@@ -14,6 +13,7 @@ const App = () => {
         <Route path="/articles/:id" element={<ArticleDetailPage />} />
         <Route path="/topics" element={<TopicList />} />
         <Route path="/topics/:topicSlug" element={<TopicPage />} />
+        <Route path="/*" element={<Home />} />
       </Routes>
     </div>
   );
