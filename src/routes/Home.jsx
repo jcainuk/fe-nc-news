@@ -4,9 +4,10 @@ import ArticleList from "../components/ArticleList";
 import ArticleFinder from "../apis/ArticleFinder";
 import NavigationBar from "../components/NavigationBar";
 import ArticleSortControls from "../components/ArticleSortControls";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigateTo = useNavigate();
   const [articles, setArticles] = useState([]);
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("");
@@ -72,6 +73,7 @@ const Home = () => {
         sort_by: sortBy,
         order: sortOrder
       });
+      navigateTo(`/?sort_by=${sortBy}&order=${sortOrder}`);
     } catch (err) {
       console.log(err);
     }
@@ -86,6 +88,7 @@ const Home = () => {
 
       const response = await ArticleFinder.get("/articles");
       setArticles(response.data.articles);
+      navigateTo(`/?sort_by=${sortBy}&order=${sortOrder}`);
     } catch (err) {
       console.log(err);
     }
