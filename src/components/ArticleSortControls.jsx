@@ -10,6 +10,7 @@ const ArticleSortControls = ({
 
   const handleSortChange = (e) => {
     const { name, value } = e.target;
+
     onSortChange(name, value);
   };
 

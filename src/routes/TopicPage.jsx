@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import ArticleList from "../components/ArticleList";
 import NavigationBar from "../components/NavigationBar";
-import ArticleSortControls from "../components/ArticleSortControls";
+
 import ArticleFinder from "../apis/ArticleFinder";
 
 const TopicPage = () => {
@@ -11,19 +11,12 @@ const TopicPage = () => {
   const [topicArticles, setTopicArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [sortOptions, setSortOptions] = useState({
-    sortBy: "created_at",
-    sortOrder: "desc"
-  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await ArticleFinder.get(
-          `/articles?topic=${topicSlug}`,
-          {
-            params: sortOptions
-          }
+          `/articles?topic=${topicSlug}`
         );
         setTopicArticles(response.data.articles);
         setIsLoading(false);
@@ -34,11 +27,7 @@ const TopicPage = () => {
       }
     };
     fetchData();
-  }, [topicSlug, sortOptions]);
-
-  const handleSortChange = (sortBy, sortOrder) => {
-    setSortOptions({ sortBy, sortOrder });
-  };
+  }, [topicSlug]);
 
   return (
     <div>
@@ -52,11 +41,8 @@ const TopicPage = () => {
         ) : (
           <div>
             <h2>Topic: {topicSlug}</h2>
-            <ArticleSortControls
-              onSortChange={handleSortChange}
-              sortOptions={sortOptions}
-            />
-            <ArticleList topicSlug={topicSlug} />
+
+            <ArticleList topicSlug={topicSlug} sortOptions={{}} />
           </div>
         )}
       </div>

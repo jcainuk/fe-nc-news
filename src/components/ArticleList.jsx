@@ -7,6 +7,7 @@ const ArticleList = ({ topicSlug, sortOptions }) => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const { sortBy, sortOrder } = sortOptions;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +31,7 @@ const ArticleList = ({ topicSlug, sortOptions }) => {
       }
     };
 
+    console.log("sortOptions:", sortOptions);
     fetchData();
   }, [topicSlug, sortOptions]);
 

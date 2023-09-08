@@ -4,11 +4,13 @@ import ArticleList from "../components/ArticleList";
 import ArticleFinder from "../apis/ArticleFinder";
 import NavigationBar from "../components/NavigationBar";
 import ArticleSortControls from "../components/ArticleSortControls";
+import { useSearchParams } from "react-router-dom";
 
 const Home = () => {
   const [articles, setArticles] = useState([]);
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,13 +22,25 @@ const Home = () => {
           }
         });
         setArticles(response.data.articles);
+        console.log(
+          "API request with sortBy:",
+          sortBy,
+          "and sortOrder:",
+          sortOrder
+        );
       } catch (err) {
         console.log(err);
       }
     };
 
+    const initialSortBy = searchParams.get("sort_by");
+    const initialSortOrder = searchParams.get("order");
+
+    setSortBy(initialSortBy || "");
+    setSortOrder(initialSortOrder || "");
+
     fetchData();
-  }, [sortBy, sortOrder]);
+  }, []);
 
   const handleSortChange = (name, value) => {
     if (name === "sortBy") {
@@ -34,9 +48,11 @@ const Home = () => {
     } else if (name === "sortOrder") {
       setSortOrder(value);
     }
+    console.log("handleSortChange called");
   };
 
   const handleApplyFilters = async () => {
+    console.log("handleApplyFilters called");
     try {
       const response = await ArticleFinder.get("/articles", {
         params: {
@@ -45,6 +61,11 @@ const Home = () => {
         }
       });
       setArticles(response.data.articles);
+      console.log("handleApplyFilters called");
+      setSearchParams({
+        sort_by: sortBy,
+        order: sortOrder
+      });
     } catch (err) {
       console.log(err);
     }
@@ -54,6 +75,8 @@ const Home = () => {
     try {
       setSortBy("");
       setSortOrder("");
+
+      setSearchParams({});
 
       const response = await ArticleFinder.get("/articles");
       setArticles(response.data.articles);
@@ -72,7 +95,7 @@ const Home = () => {
         onApplyFilters={handleApplyFilters}
         onResetFilters={handleResetFilters}
       />
-      <ArticleList articles={articles} />
+      <ArticleList articles={articles} sortOptions={{ sortBy, sortOrder }} />
     </div>
   );
 };
