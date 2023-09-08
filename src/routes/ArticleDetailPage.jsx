@@ -89,7 +89,7 @@ const ArticleDetailPage = () => {
         {isLoading ? (
           <p>Loading...</p>
         ) : isError ? (
-          <p>An error occurred while fetching data.</p>
+          <p>Article not found</p>
         ) : (
           <div className="row justify-content-center">
             <div className="col-12 col-md-8">

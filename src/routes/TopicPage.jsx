@@ -39,7 +39,7 @@ const TopicPage = () => {
         {isLoading ? (
           <p>Loading...</p>
         ) : isError ? (
-          <p>An error occurred while fetching data.</p>
+          <p>Topic not found</p>
         ) : (
           <div className="row">
             <h2>Topic: {topicSlug}</h2>
