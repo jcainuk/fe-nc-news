@@ -4,48 +4,14 @@ import ArticleFinder from "../apis/ArticleFinder";
 
 const ArticleList = ({ articles, sortOptions }) => {
   const navigateTo = useNavigate();
-  // const [articles, setArticles] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const { sortBy, sortOrder } = sortOptions;
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       let response;
-  //       if (topicSlug) {
-  //         response = await ArticleFinder.get(`/articles?topic=${topicSlug}`, {
-  //           params: sortOptions
-  //         });
-  //       } else {
-  //         response = await ArticleFinder.get("/articles", {
-  //           params: sortOptions
-  //         });
-  //       }
-  //       setArticles(response.data.articles);
-  //       setIsLoading(false);
-  //     } catch (err) {
-  //       console.error(err);
-  //       setIsLoading(false);
-  //       setIsError(true);
-  //     }
-  //   };
-
-  //   console.log("sortOptions:", sortOptions);
-  //   fetchData();
-  // }, [topicSlug, sortOptions]);
-
   const handleArticleSelect = (id) => {
     navigateTo(`/articles/${id}`);
   };
-
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
-
-  // if (isError) {
-  //   return <p>An error occurred while fetching data.</p>;
-  // }
 
   return (
     <div className="row">
