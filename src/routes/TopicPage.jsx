@@ -12,21 +12,19 @@ const TopicPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
+  const fetchArticlesByTopic = async () => {
+    try {
+      const response = await ArticleFinder.get(`/articles?topic=${topicSlug}`);
+      setTopicArticles(response.data.articles);
+      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+      setIsLoading(false);
+      setIsError(true);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await ArticleFinder.get(
-          `/articles?topic=${topicSlug}`
-        );
-        setTopicArticles(response.data.articles);
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err);
-        setIsLoading(false);
-        setIsError(true);
-      }
-    };
-    fetchData();
+    fetchArticlesByTopic();
   }, [topicSlug]);
 
   const handleArticleSelect = (id) => {
