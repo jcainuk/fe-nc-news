@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import NavigationBar from "../components/NavigationBar";
@@ -6,8 +6,7 @@ import ArticleFinder from "../apis/ArticleFinder";
 import CommentList from "../components/CommentList";
 import VoteArticle from "../components/VoteArticle";
 import CommentForm from "../components/CommentForm";
-
-const loggedInUser = "grumpy19";
+import { UserContext } from "../contexts/UserProvider";
 
 const ArticleDetailPage = () => {
   const { id } = useParams();
@@ -16,6 +15,8 @@ const ArticleDetailPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [voteCount, setVoteCount] = useState(0);
+
+  const { user: loggedInUser } = useContext(UserContext);
 
   useEffect(() => {
     const fetchData = async () => {
