@@ -25,9 +25,7 @@ const Home = () => {
         if (sortOrder) {
           params.order = sortOrder;
         }
-        const response = await ArticleFinder.get("/articles", {
-          params
-        });
+        const response = await ArticleFinder.get("/articles", params);
         setArticles(response.data.articles);
         console.log(
           "API request with sortBy:",
@@ -62,13 +60,11 @@ const Home = () => {
     console.log("handleApplyFilters called");
     try {
       const response = await ArticleFinder.get("/articles", {
-        params: {
-          sort_by: sortBy,
-          order: sortOrder
-        }
+        params: { sort_by: sortBy, order: sortOrder }
       });
+      console.log(response.data.articles, "response");
       setArticles(response.data.articles);
-      console.log("handleApplyFilters called");
+
       setSearchParams({
         sort_by: sortBy,
         order: sortOrder

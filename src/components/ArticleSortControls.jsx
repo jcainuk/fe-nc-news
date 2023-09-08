@@ -7,7 +7,6 @@ const ArticleSortControls = ({
   onResetFilters
 }) => {
   const { sortBy, sortOrder } = sortOptions;
-
   const handleSortChange = (e) => {
     const { name, value } = e.target;
 

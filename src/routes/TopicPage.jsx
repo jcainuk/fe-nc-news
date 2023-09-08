@@ -41,8 +41,9 @@ const TopicPage = () => {
         ) : (
           <div>
             <h2>Topic: {topicSlug}</h2>
-
-            <ArticleList topicSlug={topicSlug} sortOptions={{}} />
+            {topicArticles.map((article) => {
+              return <p>{article.title}</p>;
+            })}
           </div>
         )}
       </div>
