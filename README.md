@@ -46,6 +46,26 @@ You can access a live demo of the application [here TBA!](To be announced soon!)
 - [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
 - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
 
+- React Hooks and Router
+
+In this project, I leveraged various React hooks to manage state and side-effects efficiently, making the application dynamic and responsive. Additionally, I utilized [React Router](https://reactrouter.com/) to handle client-side routing, enabling seamless navigation and URL-based content rendering.
+
+- React Hooks Used
+
+In this project, I utilized several React hooks to manage state and side effects efficiently:
+
+- `useState`: Used for managing local component state, such as handling form inputs and toggling UI elements.
+
+- `useEffect`: Employed for handling side effects, including fetching data from the API, updating the document title, and managing subscriptions.
+
+- `useContext`: Utilized to manage global state and share data and functions across components efficiently.
+
+- `useNavigate` (from `react-router-dom`): Enabled navigation and redirection within the application by programmatically changing the URL.
+
+- `useParams` (from `react-router-dom`): Extracted dynamic parameters from the URL to customize the content based on route parameters.
+
+These hooks allowed me to build a robust and responsive user interface while efficiently managing component state and side effects.
+
 ## Features
 
 - Browse articles by topic
