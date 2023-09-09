@@ -4,6 +4,9 @@ A React application I built as my coursework assessment for the front-end module
 
 This is the front-end of the Northcoders News application, a platform for reading and discussing articles on various topics. This React-based web application allows users to browse articles, read their contents, add and delete comments, and vote on articles. You can also filter articles by comment count, number of votes or date in ascending or descending order.
 
+Here is a link to a demo of the app:
+[jcain-news](https://jcainuk-news.netlify.app/)
+
 This React application makes requests to the API I built which is hosted here: [Northcoders News API](https://nc-news-ry7t.onrender.com/api/articles)
 
 Please note that the API hosted on Render at the above hyperlink sometimes spins down when not in use. If you are having issues viewing the articles, please consider forking and cloning my API for this project on Github in another terminal and hosting it locally. Here is the link to my back-end API for this project on Github where you can also find full installation instructions:
@@ -34,7 +37,7 @@ This front-end application is part of a full-stack project developed for the Nor
 
 ## Demo Link
 
-You can access a live demo of the application [here TBA!](To be announced soon!).
+You can access a live demo of the application here: [jcain-news](https://jcainuk-news.netlify.app/)
 
 ## Technologies Used
 
